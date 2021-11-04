@@ -5,7 +5,7 @@ Serverless plugin to run [aws-ses-v2-local](https://github.com/domdomegg/aws-ses
 ## Install
 
 ```
-npm install serverless-offline-ses-v2
+npm install --save-dev serverless-offline-ses-v2
 ```
 
 ## Usage
@@ -41,3 +41,7 @@ export default {
   }
 }
 ```
+
+### Running serverless-offline
+
+Use `serverless offline start` instead of `serverless offline`, if you aren't already. This is necessary for serverless-offline to fire off `init` and `end` lifecycle hooks so that we can start and stop the aws-ses-v2-local server correctly.
