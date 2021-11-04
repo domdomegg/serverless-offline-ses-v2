@@ -1,11 +1,43 @@
-# typescript-library-template
+# serverless-offline-ses-v2
 
-Personal template for creating TypeScript libraries.
+Serverless plugin to run [aws-ses-v2-local](https://github.com/domdomegg/aws-ses-v2-local)
+
+## Install
+
+```
+npm install serverless-offline-ses-v2
+```
 
 ## Usage
 
-1. Use a copy of this template
-2. Add the `NPM_TOKEN` secret (For publishing)
-3. Update the package name and description in `package.json`
-4. Update this README
-5. Run `npm i` and start developing!
+### Serverless configuration
+
+Add it to your list of plugins, and optinally custom config
+
+serverless.yaml:
+
+```yaml
+plugins:
+  - serverless-offline
+  - serverless-offline-ses-v2
+
+custom:
+  serverless-offline-ses-v2:
+    port: 8005
+```
+
+serverless.js / serverless.ts:
+
+```ts
+export default {
+  plugins: [
+    "serverless-offline",
+    "serverless-offline-ses-v2",
+  ],
+  custom: {
+    'serverless-offline-ses-v2': {
+      port: 8005,
+    }
+  }
+}
+```

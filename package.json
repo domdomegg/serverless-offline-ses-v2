@@ -1,7 +1,7 @@
 {
-  "name": "typescript-library-template",
+  "name": "serverless-offline-ses-v2",
   "version": "0.0.0",
-  "description": "Template for creating TypeScript libraries",
+  "description": "Serverless plugin to run aws-ses-v2-local",
   "license": "MIT",
   "author": "Adam Jones (domdomegg)",
   "main": "dist/index.js",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
+    "@types/serverless": "^1.78.39",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "eslint": "^7.32.0",
@@ -34,5 +35,8 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "aws-ses-v2-local": "^1.0.0"
   }
 }
