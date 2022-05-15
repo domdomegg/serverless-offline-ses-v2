@@ -25,7 +25,7 @@ test('serverless-offline-ses-v2', async () => {
     },
   } as unknown as Serverless;
   let s: Server | undefined;
-  mockServer.mockImplementation((config) => {
+  mockServer.mockImplementation(async (config) => {
     s = {
       address: jest.fn().mockReturnValue({ port: config?.port ?? '8000', family: 'IPv4', address: '127.0.0.1' }),
       close: jest.fn().mockImplementation((cb) => cb()),
@@ -48,7 +48,7 @@ test('serverless-offline-ses-v2', async () => {
   expect(server).toHaveBeenCalledTimes(1);
   expect(server).toHaveBeenCalledWith(serverlessMock.service.custom['serverless-offline-ses-v2']);
   expect(s?.close).not.toHaveBeenCalled();
-  expect(serverlessMock.cli.log).toHaveBeenCalledWith('serverless-offline-ses-v2: listening on http://localhost:1111');
+  expect(serverlessMock.cli.log).toHaveBeenCalledWith('serverless-offline-ses-v2: server running at http://localhost:1111');
 
   // when... we call the end hook
   await plugin.hooks['before:offline:start:end']();
