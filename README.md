@@ -2,6 +2,8 @@
 
 Serverless plugin to run [aws-ses-v2-local](https://github.com/domdomegg/aws-ses-v2-local)
 
+Supports the AWS SES API v1 and v2, and Serverless Framework v2 and v3
+
 ## Install
 
 ```

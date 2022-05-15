@@ -1,8 +1,9 @@
 import server, { Config } from 'aws-ses-v2-local';
 import type Serverless from 'serverless';
+import type Plugin from 'serverless/classes/Plugin';
 import type { Server } from 'http';
 
-class ServerlessOfflineSesV2Plugin {
+class ServerlessOfflineSesV2Plugin implements Plugin {
   readonly hooks: Record<string, () => Promise<unknown>>;
 
   private readonly config: Config;
@@ -21,12 +22,12 @@ class ServerlessOfflineSesV2Plugin {
   }
 
   private start = async () => {
+    this.serverless.cli.log('serverless-offline-ses-v2: starting server...');
+
     const s = await server(this.config);
     this.servers.push(s);
     let address = s.address();
-    if (address === null) {
-      address = 'unknown';
-    } else if (typeof address !== 'string') {
+    if (address && typeof address !== 'string') {
       if (address.address === '127.0.0.1' || address.address === '::') {
         address = `http://localhost:${address.port}`;
       } else if (address.family === 'IPv4') {
@@ -38,10 +39,12 @@ class ServerlessOfflineSesV2Plugin {
       }
     }
 
-    this.serverless.cli.log(`serverless-offline-ses-v2: listening on ${address}`);
+    this.serverless.cli.log(`serverless-offline-ses-v2: server running${address ? ` at ${address}` : ''}`);
   }
 
   private stop = async () => {
+    this.serverless.cli.log('serverless-offline-ses-v2: stopping server...');
+
     await Promise.allSettled(this.servers.map((s) => new Promise<void>((resolve, reject) => s.close((err) => {
       if (err) {
         reject(err);
