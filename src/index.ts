@@ -3,6 +3,8 @@ import type Serverless from 'serverless';
 import type Plugin from 'serverless/classes/Plugin';
 import type { Server } from 'http';
 
+const PLUGIN_NAME = 'serverless-offline-ses-v2';
+
 class ServerlessOfflineSesV2Plugin implements Plugin {
   readonly hooks: Record<string, () => Promise<unknown>>;
 
@@ -11,7 +13,7 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
   private readonly servers: Server[] = [];
 
   constructor(private serverless: Serverless) {
-    this.config = this.serverless.service?.custom?.['serverless-offline-ses-v2'] ?? {};
+    this.config = this.serverless.service?.custom?.[PLUGIN_NAME] ?? {};
 
     this.hooks = {
       'before:offline:start:init': this.start,
@@ -22,7 +24,7 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
   }
 
   private start = async () => {
-    this.serverless.cli.log('serverless-offline-ses-v2: starting server...');
+    this.serverless.cli.log(`${PLUGIN_NAME}: starting server...`);
 
     const s = await server(this.config);
     this.servers.push(s);
@@ -39,11 +41,11 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
       }
     }
 
-    this.serverless.cli.log(`serverless-offline-ses-v2: server running${address ? ` at ${address}` : ''}`);
+    this.serverless.cli.log(`${PLUGIN_NAME}: server running${address ? ` at ${address}` : ''}`);
   }
 
   private stop = async () => {
-    this.serverless.cli.log('serverless-offline-ses-v2: stopping server...');
+    this.serverless.cli.log(`${PLUGIN_NAME}: stopping server...`);
 
     await Promise.allSettled(this.servers.map((s) => new Promise<void>((resolve, reject) => s.close((err) => {
       if (err) {
@@ -53,7 +55,7 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
       }
     }))));
 
-    this.serverless.cli.log('serverless-offline-ses-v2: stopped');
+    this.serverless.cli.log(`${PLUGIN_NAME}: stopped server`);
   }
 }
 

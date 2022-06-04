@@ -55,5 +55,5 @@ test('serverless-offline-ses-v2', async () => {
 
   // then... the server is closed, and we have correct logging
   expect(s?.close).toHaveBeenCalledTimes(1);
-  expect(serverlessMock.cli.log).toHaveBeenCalledWith('serverless-offline-ses-v2: stopped');
+  expect(serverlessMock.cli.log).toHaveBeenCalledWith('serverless-offline-ses-v2: stopped server');
 });
