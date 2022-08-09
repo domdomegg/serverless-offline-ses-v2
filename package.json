@@ -4,6 +4,10 @@
   "description": "Serverless plugin to run aws-ses-v2-local",
   "license": "MIT",
   "author": "Adam Jones (domdomegg)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/domdomegg/serverless-offline-ses-v2.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
