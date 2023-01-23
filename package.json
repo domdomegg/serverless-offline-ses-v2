@@ -1,6 +1,6 @@
 {
   "name": "serverless-offline-ses-v2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Serverless plugin to run aws-ses-v2-local",
   "license": "MIT",
   "author": "Adam Jones (domdomegg)",
