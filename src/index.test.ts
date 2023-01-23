@@ -1,7 +1,7 @@
 import server from 'aws-ses-v2-local';
 import type { Server } from 'http';
 import type Serverless from 'serverless';
-import Plugin from '../src/index';
+import Plugin from './index';
 
 jest.mock('aws-ses-v2-local');
 
@@ -42,7 +42,7 @@ test('serverless-offline-ses-v2', async () => {
   expect(server).not.toHaveBeenCalled();
 
   // when... we call the init hook
-  await plugin.hooks['before:offline:start:init']();
+  await plugin.hooks['before:offline:start:init']?.();
 
   // then... we have a server set up with our config, it is not closed, and we correctly log the address
   expect(server).toHaveBeenCalledTimes(1);
@@ -51,7 +51,7 @@ test('serverless-offline-ses-v2', async () => {
   expect(serverlessMock.cli.log).toHaveBeenCalledWith('serverless-offline-ses-v2: server running at http://localhost:1111');
 
   // when... we call the end hook
-  await plugin.hooks['before:offline:start:end']();
+  await plugin.hooks['before:offline:start:end']?.();
 
   // then... the server is closed, and we have correct logging
   expect(s?.close).toHaveBeenCalledTimes(1);

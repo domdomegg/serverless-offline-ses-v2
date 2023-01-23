@@ -19,8 +19,6 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
       'before:offline:start:init': this.start,
       'before:offline:start:end': this.stop,
     };
-
-    return this;
   }
 
   private start = async () => {
@@ -42,21 +40,23 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
     }
 
     this.serverless.cli.log(`${PLUGIN_NAME}: server running${address ? ` at ${address}` : ''}`);
-  }
+  };
 
   private stop = async () => {
     this.serverless.cli.log(`${PLUGIN_NAME}: stopping server...`);
 
-    await Promise.allSettled(this.servers.map((s) => new Promise<void>((resolve, reject) => s.close((err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    }))));
+    await Promise.allSettled(this.servers.map((s) => new Promise<void>((resolve, reject) => {
+      s.close((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    })));
 
     this.serverless.cli.log(`${PLUGIN_NAME}: stopped server`);
-  }
+  };
 }
 
 // NB: export default (as opposed to export =) does not work here with Serverless
