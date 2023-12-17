@@ -1,11 +1,14 @@
 import server from 'aws-ses-v2-local';
 import type { Server } from 'http';
 import type Serverless from 'serverless';
+import {
+  test, expect, vi, MockedFunction,
+} from 'vitest';
 import Plugin from './index';
 
-jest.mock('aws-ses-v2-local');
+vi.mock('aws-ses-v2-local');
 
-const mockServer = server as jest.MockedFunction<typeof server>;
+const mockServer = server as MockedFunction<typeof server>;
 
 test('serverless-offline-ses-v2', async () => {
   // given... a configuration and a mock of aws-ses-v2-local
@@ -21,14 +24,14 @@ test('serverless-offline-ses-v2', async () => {
       },
     },
     cli: {
-      log: jest.fn(),
+      log: vi.fn(),
     },
   } as unknown as Serverless;
   let s: Server | undefined;
   mockServer.mockImplementation(async (config) => {
     s = {
-      address: jest.fn().mockReturnValue({ port: config?.port ?? '8000', family: 'IPv4', address: '127.0.0.1' }),
-      close: jest.fn().mockImplementation((cb) => cb()),
+      address: vi.fn().mockReturnValue({ port: config?.port ?? '8000', family: 'IPv4', address: '127.0.0.1' }),
+      close: vi.fn().mockImplementation((cb) => cb()),
     } as unknown as Server;
     return s;
   });
