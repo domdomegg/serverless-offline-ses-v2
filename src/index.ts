@@ -46,7 +46,7 @@ class ServerlessOfflineSesV2Plugin implements Plugin {
     this.serverless.cli.log(`${PLUGIN_NAME}: stopping server...`);
 
     await Promise.allSettled(this.servers.map((s) => new Promise<void>((resolve, reject) => {
-      s.close((err) => {
+      s.close((err: Error | undefined) => {
         if (err) {
           reject(err);
         } else {
